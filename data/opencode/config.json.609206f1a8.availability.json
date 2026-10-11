@@ -1,0 +1,145 @@
+{
+  "big-pickle": {
+    "model": "big-pickle",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:00:33.8829898Z",
+    "next_check": "2026-10-11T17:00:33.8829898Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "exo-free": {
+    "model": "exo-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:00:35.0351681Z",
+    "next_check": "2026-10-11T17:00:35.0351681Z",
+    "reason": "http_410",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "jev-1.13-free": {
+    "model": "jev-1.13-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:14:31.7883586Z",
+    "next_check": "2026-10-11T17:14:31.7883586Z",
+    "reason": "http_451",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "ling-3.0-flash-fin-free": {
+    "model": "ling-3.0-flash-fin-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:00:35.9252543Z",
+    "next_check": "2026-10-11T17:00:35.9252543Z",
+    "reason": "http_400",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "ling-3.1-flash-free": {
+    "model": "ling-3.1-flash-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:00:38.4264271Z",
+    "next_check": "2026-10-11T17:00:38.4264271Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "longcat-2.5-preview-free": {
+    "model": "longcat-2.5-preview-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:00:45.1972668Z",
+    "next_check": "2026-10-11T17:00:45.1972668Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "mimo-v2.6-flash-free": {
+    "model": "mimo-v2.6-flash-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:00:47.7958009Z",
+    "next_check": "2026-10-11T17:00:47.7958009Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "muse-spark-1.2-contributor-free": {
+    "model": "muse-spark-1.2-contributor-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:02:31.7698954Z",
+    "next_check": "2026-10-11T17:02:31.7698954Z",
+    "reason": "http_403",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "muse-spark-1.3-contributor-free": {
+    "model": "muse-spark-1.3-contributor-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:02:32.1931283Z",
+    "next_check": "2026-10-11T17:02:32.1931283Z",
+    "reason": "http_403",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "nemotron-3-ultra-free": {
+    "model": "nemotron-3-ultra-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:02:34.2409627Z",
+    "next_check": "2026-10-11T17:02:34.2409627Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "nemotron-3.5-lightning-free": {
+    "model": "nemotron-3.5-lightning-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:04:33.2565027Z",
+    "next_check": "2026-10-11T17:04:33.2565027Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "space-bunny-free": {
+    "model": "space-bunny-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:04:35.0176469Z",
+    "next_check": "2026-10-11T17:04:35.0176469Z",
+    "reason": "probe_succeeded",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  },
+  "step-5-preview-free": {
+    "model": "step-5-preview-free",
+    "disabled": false,
+    "checked_at": "2026-10-11T16:04:35.9740506Z",
+    "next_check": "2026-10-11T17:04:35.9740506Z",
+    "reason": "http_429",
+    "channel": "anonymous",
+    "probe_version": 1,
+    "auto_effort": {},
+    "effort_checked_at": "0001-01-01T00:00:00Z"
+  }
+}

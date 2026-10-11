@@ -1,0 +1,3 @@
+OneHub: http://127.0.0.1:3000/
+API:    http://127.0.0.1:3000/v1
+First visit: create an administrator. Upstream credentials are never imported automatically.

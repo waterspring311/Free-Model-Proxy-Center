@@ -1,0 +1,33 @@
+{
+  "listen": "127.0.0.1:8080",
+  "server_keys": [
+    "internal-QVkTBQ0CZJ0muk3HQVZqmmJZKENBBPgs"
+  ],
+  "zen_keys": [],
+  "go_keys": [],
+  "anonymous": true,
+  "proxies": [
+    "direct"
+  ],
+  "prefer": "go",
+  "retry": {
+    "max_attempts": 2,
+    "timeout_seconds": 300
+  },
+  "models": {
+    "refresh_seconds": 300,
+    "protocols": {}
+  },
+  "logging": {
+    "level": "info",
+    "ring_size": 1000,
+    "dump_request_bodies": false
+  },
+  "webui": {
+    "enabled": true,
+    "listen": "127.0.0.1:8081",
+    "username": "onehub-internal",
+    "password_hash": "$argon2id$v=19$m=65536,t=3,p=2$D6I2AR4nClLj4tAQboylXw$T1vgLh5sFWELFS3C+xw62SpmSi1rQFtFuXvQB652Df0",
+    "session_ttl_minutes": 720
+  }
+}
