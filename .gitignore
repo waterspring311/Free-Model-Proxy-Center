@@ -1,0 +1,10 @@
+node_modules/
+dist/
+data/
+runtime/
+artifacts/
+release/
+.cache/
+*.log
+.env
+upstream/
