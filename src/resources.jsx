@@ -19,7 +19,7 @@ function ChannelForm({ row, onClose, onSaved }) {
     <div className="modal-body form-stack">{error && <Alert tone="red">{error}</Alert>}
       <Field label="渠道名称"><input name="name" required maxLength={100} defaultValue={row?.name} /></Field>
       <div className="form-grid"><Field label="平台"><select name="provider" value={platform} disabled={!!row} onChange={event => setPlatform(event.target.value)}>
-        <option value="opencode">OpenCode</option><option value="workbuddy">WorkBuddy</option></select></Field>
+        <option value="opencode">OpenCode</option><option value="workbuddy">WorkBuddy</option><option value="openrouter">OpenRouter</option><option value="qwen">千问 / DashScope</option><option value="siliconflow">硅基流动 / SiliconFlow</option></select></Field>
         <Field label="模型前缀"><input name="prefix" defaultValue={row?.prefix} disabled={!!row} required pattern={'[a-z][a-z0-9\\-]{1,39}'} placeholder="例如 opencode-2" /></Field></div>
       <Field label="上游 Base URL"><input name="base_url" type="url" defaultValue={row?.base_url} disabled={!!row?.managed} required placeholder="https://proxy.example.com" /></Field>
       {!row?.managed && <Field label="上游 API Key"><input name="key" type="password" autoComplete="new-password" placeholder={row ? '留空保留现有 Key' : '可选'} /></Field>}
@@ -86,6 +86,70 @@ function AliasForm({ row, models, onClose, onSaved }) {
   </div><footer><Button variant="secondary" onClick={onClose}>取消</Button><Button type="submit" loading={busy}>保存别名</Button></footer></form></Modal>;
 }
 
+function capabilityTone(score) {
+  return score >= 85 ? 'high' : score >= 70 ? 'mid' : 'low';
+}
+
+function confidenceLabel(value) {
+  return value === 'high' ? '高置信度' : value === 'medium' ? '中等置信度' : value === 'low' ? '低置信度' : '待核验';
+}
+
+const CAPABILITY_SORT_OPTIONS = [
+  { value: 'default', label: '默认排序' },
+  { value: 'capability-desc', label: '综合能力：高 → 低' },
+  { value: 'capability-asc', label: '综合能力：低 → 高' },
+  { value: 'reasoning-desc', label: '推理能力：高 → 低' },
+  { value: 'coding-desc', label: '编码能力：高 → 低' },
+  { value: 'longContext-desc', label: '长上下文：高 → 低' },
+  { value: 'tools-desc', label: '工具调用：高 → 低' },
+  { value: 'multimodal-desc', label: '多模态：高 → 低' },
+  { value: 'efficiency-desc', label: '响应效率：高 → 低' },
+];
+
+function capabilitySortValue(row, key) {
+  if (!row.capability) return null;
+  if (key === 'capability') return row.capability.score;
+  return row.capability.dimensions?.find(item => item.key === key)?.score ?? null;
+}
+
+function sortModelsByCapability(rows, sort) {
+  if (!sort || sort === 'default') return rows;
+  const [key, direction = 'desc'] = sort.split('-');
+  const factor = direction === 'asc' ? 1 : -1;
+  return [...rows].sort((a, b) => {
+    const left = capabilitySortValue(a, key), right = capabilitySortValue(b, key);
+    if (left == null && right == null) return a.id.localeCompare(b.id);
+    if (left == null) return 1;
+    if (right == null) return -1;
+    return left === right ? a.id.localeCompare(b.id) : (left - right) * factor;
+  });
+}
+
+function CapabilityCell({ row, expanded, onToggle }) {
+  const capability = row.capability;
+  if (!capability) return <span className="muted">-</span>;
+  return <button type="button" className={`score-chip ${capabilityTone(capability.score)}`} aria-expanded={expanded}
+    title="点击展开能力评分明细" onClick={onToggle}>
+    <span>{capability.score}</span><small>{capability.grade}</small><ChevronRight size={13} />
+  </button>;
+}
+
+function CapabilityPanel({ capability }) {
+  if (!capability) return null;
+  return <div className="capability-panel">
+    <div className="capability-summary">
+      <div className="capability-kicker"><span>能力评估</span><span className={`capability-label ${capabilityTone(capability.score)}`}>{capability.grade} · {capability.label}</span></div>
+      <div className="capability-overall"><strong>{capability.score}</strong><span>/100</span></div>
+      <p>{capability.summary}</p>
+      <small><ShieldCheck size={13} />{capability.basis} · {confidenceLabel(capability.confidence)}</small>
+    </div>
+    <div className="capability-grid">{capability.dimensions.map(item => <div className="capability-item" key={item.key}>
+      <div><span>{item.label}</span><strong>{item.score}</strong></div>
+      <div className="capability-track"><i style={{ width: `${item.score}%` }} /></div>
+    </div>)}</div>
+  </div>;
+}
+
 function ModelDetail({ row, onClose }) {
   const endpoints = row.supported_endpoints || ['/v1/chat/completions', '/v1/responses', '/v1/messages'];
   return <Modal title="模型详情" onClose={onClose} wide><div className="modal-body">
@@ -105,10 +169,13 @@ export function Models() {
     return { ...catalog, aliases: aliases.aliases, channels: channels.channels };
   });
   const [view, setView] = useState('models'), [search, setSearch] = useState(''), [filter, setFilter] = useState(''), [freeOnly, setFreeOnly] = useState('');
-  const [editor, setEditor] = useState(null), [confirm, setConfirm] = useState(null), [detail, setDetail] = useState(null), [busy, setBusy] = useState('');
+  const [sort, setSort] = useState('capability-desc');
+  const [editor, setEditor] = useState(null), [confirm, setConfirm] = useState(null), [detail, setDetail] = useState(null), [busy, setBusy] = useState(''), [expanded, setExpanded] = useState('');
   const notice = useNotice(), models = (state.data?.data || []).filter(row => !row.alias);
-  const visible = models.filter(row => (!filter || row.channel_id === filter) && (!freeOnly || row.is_free === true)
+  const filtered = models.filter(row => (!filter || row.channel_id === filter) && (!freeOnly || row.is_free === true)
     && row.id.toLowerCase().includes(search.toLowerCase()));
+  const visible = sortModelsByCapability(filtered, sort);
+  const capabilitySort = sort === 'capability-asc' ? 'asc' : sort === 'capability-desc' ? 'desc' : null;
   const aliases = (state.data?.aliases || []).filter(row => (row.name + ' ' + row.target).toLowerCase().includes(search.toLowerCase()));
   async function toggle(row, enabled) {
     setBusy(row.id);
@@ -129,19 +196,26 @@ export function Models() {
     <div className="toolbar"><div className="search"><Search size={16} /><input placeholder="搜索模型或别名" aria-label="搜索模型" value={search} onChange={event => setSearch(event.target.value)} /></div>
       {view === 'models' && <><select className="filter-select" aria-label="模型渠道筛选" value={filter} onChange={event => setFilter(event.target.value)}><option value="">全部渠道</option>
         {(state.data?.channels || []).map(row => <option key={row.id} value={row.id}>{row.name}</option>)}</select>
-        {state.data?.free_only ? <span className="tag">仅允许免费模型</span> : <select className="filter-select" aria-label="模型费用筛选" value={freeOnly} onChange={event => setFreeOnly(event.target.value)}><option value="">全部模型</option><option value="free">仅免费模型</option></select>}</>}<span className="result-count">{view === 'models' ? visible.length : aliases.length} 项</span></div>
+        {state.data?.free_only ? <span className="tag">仅允许免费模型</span> : <select className="filter-select" aria-label="模型费用筛选" value={freeOnly} onChange={event => setFreeOnly(event.target.value)}><option value="">全部模型</option><option value="free">仅免费模型</option></select>}
+        <select className="filter-select" aria-label="模型能力排序" value={sort} onChange={event => setSort(event.target.value)}>
+          {CAPABILITY_SORT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+        </select></>}<span className="result-count">{view === 'models' ? visible.length : aliases.length} 项</span></div>
     <LoadState {...state} hasData={state.data} retry={state.refresh}>
       {state.data?.free_only && <Alert>当前仅保留确认免费的模型。免费模型仍可能有使用限额；限额不会将模型移出目录。上游改为收费后，下次同步会自动移除。</Alert>}
       {state.data?.partial && <Alert>部分渠道模型目录同步失败：{state.data.providers.filter(row => row.error).map(row => state.data.channels.find(ch => ch.id === row.id)?.name || row.id).join('、')}</Alert>}
-      {view === 'models' ? !visible.length ? <Empty title="没有匹配的模型" /> : <div className="table-scroll"><table><thead><tr><th>模型 ID</th><th>渠道</th><th>协议</th><th>目录状态</th><th>启用</th><th className="right">操作</th></tr></thead>
-        <tbody>{visible.map(row => <tr key={row.id}><td><code className="model-id" title={row.id}>{row.id}</code>{row.is_free === true && <small>免费</small>}</td><td>{row.channel_name}</td>
-          <td><div className="protocols">{(row.supported_endpoints || ['/v1/chat/completions', '/v1/responses', '/v1/messages']).map(endpoint => {
-            const label = endpoint.endsWith('/chat/completions') ? 'Chat' : endpoint.endsWith('/responses') ? 'Responses' : endpoint.endsWith('/messages') ? 'Messages' : endpoint.replace('/v1/', '');
-            return <span className="tag" key={endpoint} title={endpoint}>{label}</span>;
-          })}</div></td><td><span title={'最近同步：' + date(row.synced_at)} className={'catalog-state ' + (row.stale ? 'stale' : '')}>{row.stale ? '已过期' : '已同步'}</span></td>
-          <td><Toggle checked={row.enabled} label={(row.enabled ? '停用 ' : '启用 ') + row.id} disabled={busy === row.id} onChange={enabled => toggle(row, enabled)} /></td>
-          <td><div className="row-actions"><CopyButton value={row.id} title={'复制 ' + row.id} /><IconButton icon={Code2} title={'查看 ' + row.id} onClick={() => setDetail(row)} /></div></td>
-        </tr>)}</tbody></table></div>
+      {view === 'models' ? !visible.length ? <Empty title="没有匹配的模型" /> : <div className="table-scroll"><table><thead><tr><th>模型 ID</th><th aria-sort={capabilitySort === 'asc' ? 'ascending' : capabilitySort === 'desc' ? 'descending' : 'none'}><button type="button" className={'sort-header' + (capabilitySort ? ' active' : '')} title="点击切换综合能力排序" onClick={() => setSort(current => current === 'capability-desc' ? 'capability-asc' : 'capability-desc')}>能力<span className="sort-arrow">{capabilitySort === 'asc' ? '↑' : capabilitySort === 'desc' ? '↓' : '↕'}</span></button></th><th>渠道</th><th>协议</th><th>目录状态</th><th>启用</th><th className="right">操作</th></tr></thead>
+        <tbody>{visible.map(row => <React.Fragment key={row.id}>
+          <tr><td><code className="model-id" title={row.id}>{row.id}</code>{row.is_free === true && <small>免费</small>}</td>
+            <td><CapabilityCell row={row} expanded={expanded === row.id} onToggle={() => setExpanded(current => current === row.id ? '' : row.id)} /></td><td>{row.channel_name}</td>
+            <td><div className="protocols">{(row.supported_endpoints || ['/v1/chat/completions', '/v1/responses', '/v1/messages']).map(endpoint => {
+              const label = endpoint.endsWith('/chat/completions') ? 'Chat' : endpoint.endsWith('/responses') ? 'Responses' : endpoint.endsWith('/messages') ? 'Messages' : endpoint.replace('/v1/', '');
+              return <span className="tag" key={endpoint} title={endpoint}>{label}</span>;
+            })}</div></td><td><span title={'最近同步：' + date(row.synced_at)} className={'catalog-state ' + (row.stale ? 'stale' : '')}>{row.stale ? '已过期' : '已同步'}</span></td>
+            <td><Toggle checked={row.enabled} label={(row.enabled ? '停用 ' : '启用 ') + row.id} disabled={busy === row.id} onChange={enabled => toggle(row, enabled)} /></td>
+            <td><div className="row-actions"><CopyButton value={row.id} title={'复制 ' + row.id} /><IconButton icon={Code2} title={'查看 ' + row.id} onClick={() => setDetail(row)} /></div></td>
+          </tr>
+          {expanded === row.id && <tr className="capability-expand-row"><td colSpan={7}><CapabilityPanel capability={row.capability} /></td></tr>}
+        </React.Fragment>)}</tbody></table></div>
         : !aliases.length ? <Empty title="暂无模型别名" action={<Button icon={Link2} onClick={() => setEditor({})}>创建别名</Button>} />
           : <div className="table-scroll"><table><thead><tr><th>别名</th><th>目标模型</th><th>状态</th><th className="right">操作</th></tr></thead>
             <tbody>{aliases.map(row => <tr key={row.name}><td><code>{row.name}</code></td><td><div className="alias-target"><ArrowLeftRight size={15} /><code>{row.target}</code></div></td>

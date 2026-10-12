@@ -8,7 +8,17 @@ const probeEndpoint = model => {
   return '/v1/chat/completions';
 };
 
-function probeBody(endpoint, model) {
+function probeBody(endpoint, model, channel) {
+  // DashScope translation models reject a plain chat body. qwen-mt-uni is the
+  // multimodal translator and wants the native input object, while the plain
+  // qwen-mt-* models expect translation_options alongside the messages.
+  if (channel?.provider === 'qwen' && /^qwen-mt-uni$/i.test(model)) {
+    return { model, input: { target_lang: 'English', source_texts: ['Hello'] } };
+  }
+  if (channel?.provider === 'qwen' && /^qwen-mt-/i.test(model)) {
+    return { model, messages: [{ role: 'user', content: 'Hello' }],
+      translation_options: { source_lang: 'auto', target_lang: 'English' }, max_tokens: 16, stream: false };
+  }
   if (endpoint === '/v1/responses') return { model, input: 'ping', max_output_tokens: 16, stream: false };
   if (endpoint === '/v1/messages') return { model, max_tokens: 1, messages: [{ role: 'user', content: 'ping' }] };
   return { model, messages: [{ role: 'user', content: 'ping' }], max_tokens: 1, stream: false };
@@ -22,6 +32,19 @@ function describe(body, status) {
     if (typeof message === 'string' && message.trim()) return message.trim().slice(0, 200);
   } catch { /* not JSON */ }
   return body.trim().slice(0, 200) || `HTTP ${status}`;
+}
+
+// A manual sweep must never burn a metered channel's free quota, so only one
+// model per OpenRouter / Qwen / SiliconFlow channel is tested in a single run.
+export function manualSweep(models, providers) {
+  const seen = new Set();
+  return models.filter(model => {
+    const provider = providers.get(model.channel_id);
+    if (provider !== 'openrouter' && provider !== 'qwen' && provider !== 'siliconflow') return true;
+    if (seen.has(model.channel_id)) return false;
+    seen.add(model.channel_id);
+    return true;
+  });
 }
 
 export class ModelProber {
@@ -55,7 +78,10 @@ export class ModelProber {
   status() {
     const results = this.results();
     return { running: this.running, enabled: this.enabled(), interval_seconds: this.interval,
-      gap_seconds: this.gap, channel_gap_seconds: this.channelGap, cooldown_seconds: this.cooldown,
+      gap_seconds: this.gap, channel_gap_seconds: this.channelGap,
+      openrouter_gap_seconds: this.openrouterGap, qwen_gap_seconds: this.qwenGap,
+      siliconflow_gap_seconds: this.siliconflowGap,
+      cooldown_seconds: this.cooldown,
       models: this.lastCount, timeout_seconds: this.timeout, scope: this.scope(), last_run_at: this.lastRunAt,
       last_tick_at: this.lastTickAt, last_probe: this.lastProbe, last_error: this.lastError,
       last_summary: this.lastSummary, results };
@@ -126,6 +152,33 @@ export class ModelProber {
     return Math.min(3600, Math.max(10, this.interval));
   }
 
+  // OpenRouter's free tier has a hard daily request cap (as low as 50/day on an
+  // uncredited key), so its channel is probed far less often than the default
+  // per-minute cadence. The sweep still round-robins across its models.
+  get openrouterGap() {
+    return Math.min(86400, Math.max(600, Number(this.store.get('probe_openrouter_seconds', 3600)) || 3600));
+  }
+
+  // Qwen / DashScope free quota is per model and finite (1M tokens, 90 days),
+  // so its channel is probed far less often than the default per-minute cadence.
+  get qwenGap() {
+    return Math.min(86400, Math.max(600, Number(this.store.get('probe_qwen_seconds', 3600)) || 3600));
+  }
+
+  // SiliconFlow's ¥0 models still share a rate-limited free pool, so keep the
+  // channel on the same slow cadence as the other metered providers.
+  get siliconflowGap() {
+    return Math.min(86400, Math.max(600, Number(this.store.get('probe_siliconflow_seconds', 3600)) || 3600));
+  }
+
+  channelGapFor(channelId) {
+    const channel = this.store.channels().find(row => row.id === channelId);
+    if (channel?.provider === 'openrouter') return this.openrouterGap;
+    if (channel?.provider === 'qwen') return this.qwenGap;
+    if (channel?.provider === 'siliconflow') return this.siliconflowGap;
+    return this.channelGap;
+  }
+
   // After a model reports a rate limit it is left alone for this long.
   get cooldown() {
     return Math.min(6 * 3600, Math.max(60, Number(this.store.get('probe_cooldown_seconds', 600)) || 600));
@@ -154,10 +207,9 @@ export class ModelProber {
       const prev = lastByChannel.get(row.channel_id);
       if (!prev || row.at > prev) lastByChannel.set(row.channel_id, row.at);
     }
-    const gapMs = this.channelGap * 1000;
     const eligible = models.filter(model => {
       const at = lastByChannel.get(model.channel_id);
-      if (at && now - Date.parse(at) < gapMs) return false;
+      if (at && now - Date.parse(at) < this.channelGapFor(model.channel_id) * 1000) return false;
       return !this.coolingDown(lastByModel.get(model.id), now);
     });
     if (!eligible.length) return null;
@@ -175,8 +227,9 @@ export class ModelProber {
     try {
       const models = await this.targets();
       this.lastCount = models.length;
-      const queue = [...models];
-      const summary = { total: models.length, ok: 0, failed: 0, skipped: 0, started_at: new Date().toISOString() };
+      const providers = new Map(this.store.channels().map(row => [row.id, row.provider]));
+      const queue = manualSweep(models, providers);
+      const summary = { total: queue.length, ok: 0, failed: 0, skipped: 0, started_at: new Date().toISOString() };
       // Sequential with a pause: parallel probes were reported as false failures.
       while (queue.length && !this.stopped) {
         const result = await this.probe(queue.shift());
@@ -216,7 +269,7 @@ export class ModelProber {
       const response = await fetch(channel.base_url + endpoint, {
         method: 'POST', redirect: 'error', signal: AbortSignal.timeout(this.timeout * 1000),
         headers: { ...this.engines.headers(channel), 'Content-Type': 'application/json' },
-        body: JSON.stringify(probeBody(endpoint, model.upstream_id)),
+        body: JSON.stringify(probeBody(endpoint, model.upstream_id, channel)),
       });
       status = response.status;
       ok = response.ok;

@@ -15,15 +15,15 @@
   "proxy": "",
   "enabled": true,
   "credits": {
-    "remain": 1100.0,
+    "remain": 1208.0,
     "used": 0.0,
-    "size": 1100.0,
+    "size": 1208.0,
     "used_percent": "0.0%",
     "remain_percent": "100.0%",
     "is_paid_user": false,
     "checkin": {
       "today_checked_in": true,
-      "streak_days": 3,
+      "streak_days": 4,
       "daily_credit": 100,
       "today_credit": 100,
       "active": true
@@ -33,7 +33,7 @@
       "package_code": "TCACA_code_007_nzdH5h4Nl0",
       "remain": 100.0,
       "cycle_end_time": "2026-11-09 22:04:37",
-      "days_left": 29.2
+      "days_left": 28.5
     },
     "packages": [
       {
@@ -55,7 +55,7 @@
         "cycle_end_time": "2026-11-09 22:04:37",
         "expire_time": "2026-11-09 14:04:37",
         "no_expiry": false,
-        "days_left": 29.2,
+        "days_left": 28.5,
         "is_expired": false,
         "status": 0
       },
@@ -78,7 +78,7 @@
         "cycle_end_time": "2026-11-10 09:03:01",
         "expire_time": "2026-11-10 01:03:01",
         "no_expiry": false,
-        "days_left": 29.7,
+        "days_left": 28.9,
         "is_expired": false,
         "status": 0
       },
@@ -101,7 +101,7 @@
         "cycle_end_time": "2026-11-11 01:23:29",
         "expire_time": "2026-11-10 17:23:29",
         "no_expiry": false,
-        "days_left": 30.4,
+        "days_left": 29.6,
         "is_expired": false,
         "status": 0
       },
@@ -124,7 +124,53 @@
         "cycle_end_time": "2026-11-11 01:23:25",
         "expire_time": "2026-11-10 17:23:25",
         "no_expiry": false,
-        "days_left": 30.4,
+        "days_left": 29.6,
+        "is_expired": false,
+        "status": 0
+      },
+      {
+        "name": "CodeBuddy个人版国内运营裂变包",
+        "package_code": "TCACA_code_007_nzdH5h4Nl0",
+        "product_name": "腾讯云代码助手",
+        "sub_product_name": "腾讯云代码助手 (IDE) - 赠送包",
+        "grant_reason": "Buddy 加油站签到",
+        "resource_id": "codebuddy-k8200t5246oba1g",
+        "deal_name": "20261012126960018726465006",
+        "create_time": "2026-10-12 04:11:28",
+        "remain": 100.0,
+        "used": 0.0,
+        "size": 100.0,
+        "unit": "credits",
+        "in_usage": false,
+        "auto_renew": false,
+        "cycle_start_time": "2026-10-12 11:11:28",
+        "cycle_end_time": "2026-11-12 11:11:27",
+        "expire_time": "2026-11-12 03:11:27",
+        "no_expiry": false,
+        "days_left": 31.0,
+        "is_expired": false,
+        "status": 0
+      },
+      {
+        "name": "CodeBuddy个人版国内运营裂变包",
+        "package_code": "TCACA_code_007_nzdH5h4Nl0",
+        "product_name": "腾讯云代码助手",
+        "sub_product_name": "腾讯云代码助手 (IDE) - 赠送包",
+        "grant_reason": "成长计划奖励",
+        "resource_id": "codebuddy-k8200t5246rvi1g",
+        "deal_name": "20261012126960018726502206",
+        "create_time": "2026-10-12 04:11:31",
+        "remain": 8.0,
+        "used": 0.0,
+        "size": 8.0,
+        "unit": "credits",
+        "in_usage": false,
+        "auto_renew": false,
+        "cycle_start_time": "2026-10-12 11:11:31",
+        "cycle_end_time": "2026-11-12 11:11:30",
+        "expire_time": "2026-11-12 03:11:30",
+        "no_expiry": false,
+        "days_left": 31.0,
         "is_expired": false,
         "status": 0
       },
@@ -152,9 +198,9 @@
         "status": 0
       }
     ],
-    "updated_at": 1791708784.0511441,
-    "updated_iso": "2026-10-11 09:53:04"
+    "updated_at": 1791774694.984691,
+    "updated_iso": "2026-10-12 04:11:34"
   },
-  "lastCheckin": "2026-10-10 18:23:27",
+  "lastCheckin": "2026-10-12 04:11:31",
   "lastDailyChat": null
 }

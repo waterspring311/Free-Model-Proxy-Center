@@ -20,4 +20,4 @@ export const date = value => value ? new Date(value).toLocaleString('zh-CN', {
 }) : '-';
 export const duration = value => value == null ? '-' : value >= 1000 ? (value / 1000).toFixed(2) + ' s' : value + ' ms';
 export const provider = kind => ({ opencode: 'OpenCode', workbuddy: 'WorkBuddy', intl: 'WorkBuddy', cn: 'CodeBuddy',
-  zen: 'Zen Key', go: 'Go Key', anonymous: '公开通道' }[kind] || kind);
+  openrouter: 'OpenRouter', qwen: '千问 DashScope', siliconflow: '硅基流动', zen: 'Zen Key', go: 'Go Key', anonymous: '公开通道' }[kind] || kind);

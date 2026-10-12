@@ -51,7 +51,10 @@ export function Settings() {
     try {
       await mutate('/settings', 'PATCH', { probe_interval_seconds: Number(input.probe_interval_seconds),
         probe_timeout_seconds: Number(input.probe_timeout_seconds), probe_scope: input.probe_scope,
-        probe_gap_seconds: Number(input.probe_gap_seconds), probe_cooldown_seconds: Number(input.probe_cooldown_seconds) },
+        probe_gap_seconds: Number(input.probe_gap_seconds), probe_cooldown_seconds: Number(input.probe_cooldown_seconds),
+        probe_openrouter_seconds: Number(input.probe_openrouter_seconds),
+        probe_qwen_seconds: Number(input.probe_qwen_seconds),
+        probe_siliconflow_seconds: Number(input.probe_siliconflow_seconds) },
         state.refresh, notice, '模型探测设置已保存');
     } catch (error) { setError(error.message); } finally { setBusy(false); }
   }
@@ -116,6 +119,12 @@ export function Settings() {
                 defaultValue={state.data?.probe_gap_seconds ?? 5} key={'probeGap' + state.data?.probe_gap_seconds} /></Field>
               <Field label="限流冷却（秒）"><input type="number" name="probe_cooldown_seconds" min={60} max={21600} required
                 defaultValue={state.data?.probe_cooldown_seconds ?? 600} key={'probeCooldown' + state.data?.probe_cooldown_seconds} /></Field>
+              <Field label="OpenRouter 探测间隔（秒）"><input type="number" name="probe_openrouter_seconds" min={600} max={86400} required
+                defaultValue={state.data?.probe_openrouter_seconds ?? 3600} key={'probeOR' + state.data?.probe_openrouter_seconds} /></Field>
+              <Field label="千问探测间隔（秒）"><input type="number" name="probe_qwen_seconds" min={600} max={86400} required
+                defaultValue={state.data?.probe_qwen_seconds ?? 3600} key={'probeQW' + state.data?.probe_qwen_seconds} /></Field>
+              <Field label="硅基流动探测间隔（秒）"><input type="number" name="probe_siliconflow_seconds" min={600} max={86400} required
+                defaultValue={state.data?.probe_siliconflow_seconds ?? 3600} key={'probeSF' + state.data?.probe_siliconflow_seconds} /></Field>
             </div>
             <Field label="探测范围"><select name="probe_scope" defaultValue={state.data?.probe_scope || 'free'} key={'probeScope' + state.data?.probe_scope}>
               <option value="free">仅免费模型</option><option value="all">全部模型（可能产生费用）</option></select></Field>
@@ -130,7 +139,7 @@ export function Settings() {
         </div></section>
         <section className="settings-section"><div className="settings-description"><h2>客户端接入</h2><p>从模型目录复制模型 ID</p></div><div className="settings-content">
           <div className="code-sample"><header><span><Terminal size={15} />cURL</span><CopyButton value={sample} title="复制 cURL 示例" /></header><pre>{sample}</pre></div>
-          <div className="integration-note"><span>模型前缀</span><code>opencode/</code><code>workbuddy/</code><code>codebuddy/</code></div>
+          <div className="integration-note"><span>模型前缀</span><code>opencode/</code><code>workbuddy/</code><code>codebuddy/</code><code>openrouter/</code><code>qwen/</code><code>siliconflow/</code></div>
           <p className="settings-note">每日 Token 上限根据已完成请求的上报用量计算，属于软上限；并发请求及未上报用量可能导致超出。</p>
         </div></section>
         <section className="settings-section"><div className="settings-description"><h2>工作空间信息</h2></div><div className="settings-content">

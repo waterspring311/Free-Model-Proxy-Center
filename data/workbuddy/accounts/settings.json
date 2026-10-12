@@ -1,7 +1,7 @@
 {
-  "panel_password_salt": "48b90134fcf32900e971135b3e9320c7",
+  "panel_password_salt": "92a3396c1705bb831df7f74b62870f77",
   "panel_password_rounds": 120000,
-  "panel_password_hash": "5ea7fbf32ebbcf5ac5486833976337891e36ed953274d7f3c1a7f02d5a42e4a0",
+  "panel_password_hash": "87d4f35bd4db5c29263a6fc01f8bb1f86781f1ea2ea20e62831d585ec24b133d",
   "panel_password_default": false,
   "auth_disabled": false,
   "pricing_enabled": false

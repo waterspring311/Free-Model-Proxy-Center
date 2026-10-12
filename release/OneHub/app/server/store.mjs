@@ -183,6 +183,9 @@ export function createStore(directory, vault) {
     store.set('model_free_only', false);
     store.set('probe_enabled', true);
     store.set('probe_interval_seconds', 60);
+    store.set('probe_openrouter_seconds', 3600);
+    store.set('probe_qwen_seconds', 3600);
+    store.set('probe_siliconflow_seconds', 3600);
     store.set('probe_timeout_seconds', 30);
     store.set('probe_scope', 'free');
     for (const key of ['opencode_api_key', 'opencode_panel_password', 'workbuddy_api_key', 'workbuddy_panel_password']) {

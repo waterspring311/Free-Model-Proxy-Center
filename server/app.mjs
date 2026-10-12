@@ -531,7 +531,7 @@ export function createApp(options) {
     if (pathname === '/api/channels' && method === 'GET') return send(res, 200, { channels: await channelViews() });
     if (pathname === '/api/channels' && method === 'POST') {
       const input = await readJSON(req, 32768);
-      if (!['opencode', 'workbuddy'].includes(input.provider)) throw new HttpError(400, 'Invalid provider.');
+      if (!['opencode', 'workbuddy', 'openrouter', 'qwen', 'siliconflow'].includes(input.provider)) throw new HttpError(400, 'Invalid provider.');
       const prefix = String(input.prefix || '').trim();
       if (!/^[a-z][a-z0-9-]{1,39}$/.test(prefix)) throw new HttpError(400, '渠道前缀需使用 2-40 位小写字母、数字或连字符。');
       if (store.channels().some(row => row.prefix === prefix)) throw new HttpError(409, '渠道前缀已存在。');
@@ -641,6 +641,8 @@ export function createApp(options) {
       probe_enabled: prober.enabled(), probe_interval_seconds: prober.interval,
       probe_timeout_seconds: prober.timeout, probe_scope: prober.scope(),
       probe_gap_seconds: prober.gap, probe_cooldown_seconds: prober.cooldown, probe: prober.status(),
+      probe_openrouter_seconds: prober.openrouterGap, probe_qwen_seconds: prober.qwenGap,
+      probe_siliconflow_seconds: prober.siliconflowGap,
       probe_account_channels: store.get('probe_account_channels', false) === true,
       engines: engines.states, timezone: 'Asia/Shanghai', version: '0.1.0',
     });
@@ -670,6 +672,12 @@ export function createApp(options) {
         store.get('probe_gap_seconds', 5), 1, 120));
       store.set('probe_cooldown_seconds', finiteInteger(input.probe_cooldown_seconds,
         store.get('probe_cooldown_seconds', 600), 60, 21600));
+      store.set('probe_openrouter_seconds', finiteInteger(input.probe_openrouter_seconds,
+        store.get('probe_openrouter_seconds', 3600), 600, 86400));
+      store.set('probe_qwen_seconds', finiteInteger(input.probe_qwen_seconds,
+        store.get('probe_qwen_seconds', 3600), 600, 86400));
+      store.set('probe_siliconflow_seconds', finiteInteger(input.probe_siliconflow_seconds,
+        store.get('probe_siliconflow_seconds', 3600), 600, 86400));
       if (input.anonymous_enabled !== undefined) store.set('anonymous_enabled', input.anonymous_enabled);
       if (input.model_free_only !== undefined) store.set('model_free_only', input.model_free_only);
       store.set('timeout_seconds', timeout); store.set('models_ttl_seconds', ttl);

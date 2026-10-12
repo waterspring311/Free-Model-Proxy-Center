@@ -243,3 +243,20 @@ test('free-only routing keeps a stale free catalog visible but blocks calls when
   await f.catalog.list(null, true);
   assert.equal((await f.catalog.resolve('codebuddy/hy3', { allowed_channels: [], models: [] }, '/v1/chat/completions')).upstream, 'hy3');
 });
+
+test('Qwen free status includes documented partner models without opening hosted paid aliases', () => {
+  const catalog = new Catalog({ channels: () => [], get: () => null }, {});
+  const channel = { provider: 'qwen' };
+  for (const id of [
+    'deepseek-v4.1-flash', 'deepseek-v4-pro', 'deepseek-v4-pro-0813',
+    'deepseek-v4-flash-0731', 'deepseek-r1-distill-llama-70b',
+    'kimi-k3', 'kimi-k2.7-code', 'kimi-k2.6', 'kimi-k2.5',
+    'glm-5.3', 'glm-5.2', 'glm-5.1', 'glm-5',
+    'MiniMax-M2.5', 'tongyi-xiaomi-analysis-flash', 'tongyi-xiaomi-analysis-pro',
+  ]) assert.equal(catalog.freeStatus(channel, { id }), true, id);
+  for (const id of [
+    'vanchin/deepseek-v4.1-flash', 'siliconflow/deepseek-v3.2',
+    'ZHIPU/GLM-5.3', 'kimi/kimi-k3', 'MiniMax/MiniMax-M2.5',
+    'glm-5.2-fast-preview', 'gui-plus', 'qwen3.7-text-embedding',
+  ]) assert.equal(catalog.freeStatus(channel, { id }), null, id);
+});

@@ -15,14 +15,20 @@
   "proxy": "",
   "enabled": true,
   "credits": {
-    "remain": 99.42,
+    "remain": 129.42,
     "used": 0.58,
-    "size": 100.0,
-    "used_percent": "0.6%",
-    "remain_percent": "99.4%",
+    "size": 130.0,
+    "used_percent": "0.4%",
+    "remain_percent": "99.6%",
     "is_paid_user": false,
     "checkin": null,
-    "earliest_expiring": null,
+    "earliest_expiring": {
+      "name": "Bonus Pack",
+      "package_code": "TCACA_code_007_nzdH5h4Nl0",
+      "remain": 30.0,
+      "cycle_end_time": "2026-11-12 01:06:45",
+      "days_left": 30.6
+    },
     "packages": [
       {
         "name": "Free Plan Subscription",
@@ -46,11 +52,34 @@
         "days_left": null,
         "is_expired": false,
         "status": 0
+      },
+      {
+        "name": "Bonus Pack",
+        "package_code": "TCACA_code_007_nzdH5h4Nl0",
+        "product_name": "Tencent Cloud AI Code Assistant",
+        "sub_product_name": "Tencent Cloud CodeBuddy （IDE）",
+        "grant_reason": "",
+        "resource_id": "codebuddy-k8100tgne8ijb2e",
+        "deal_name": "20261012158014398995051",
+        "create_time": "2026-10-11 18:06:47",
+        "remain": 30.0,
+        "used": 0.0,
+        "size": 30.0,
+        "unit": "credit",
+        "in_usage": false,
+        "auto_renew": false,
+        "cycle_start_time": "2026-10-12 01:06:46",
+        "cycle_end_time": "2026-11-12 01:06:45",
+        "expire_time": "2026-11-11 17:06:45",
+        "no_expiry": false,
+        "days_left": 30.6,
+        "is_expired": false,
+        "status": 0
       }
     ],
-    "updated_at": 1791706982.2437959,
-    "updated_iso": "2026-10-11 09:23:02"
+    "updated_at": 1791774697.457554,
+    "updated_iso": "2026-10-12 04:11:37"
   },
   "lastCheckin": null,
-  "lastDailyChat": "2026-10-10 18:23:37"
+  "lastDailyChat": "2026-10-12 04:11:37"
 }

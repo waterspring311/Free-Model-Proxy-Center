@@ -151,7 +151,8 @@ export function PageHeader({ title, subtitle, children }) {
 
 export function ProviderMark({ kind }) {
   const value = kind === 'cn' ? 'codebuddy' : kind === 'intl' ? 'workbuddy' : kind;
-  return <span className={'provider-mark ' + value}>{value === 'opencode' ? 'OC' : value === 'codebuddy' ? 'CB' : 'WB'}</span>;
+  const label = value === 'opencode' ? 'OC' : value === 'codebuddy' ? 'CB' : value === 'openrouter' ? 'OR' : value === 'qwen' ? 'QW' : value === 'siliconflow' ? 'SF' : 'WB';
+  return <span className={'provider-mark ' + value}>{label}</span>;
 }
 
 export function RequestTable({ rows, onSelect, compact = false }) {

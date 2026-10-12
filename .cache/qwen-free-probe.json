@@ -1,0 +1,658 @@
+{
+  "channel": "ch_zVeidIyr7uaM4g",
+  "total": 78,
+  "tested": 81,
+  "ok": 46,
+  "failed": 35,
+  "finished_at": "2026-10-12T05:10:42.676Z",
+  "results": [
+    {
+      "id": "qwen/MiniMax-M2.5",
+      "upstream": "MiniMax-M2.5",
+      "status": 200,
+      "ok": true,
+      "ms": 1322,
+      "error": null
+    },
+    {
+      "id": "qwen/deepseek-r1-distill-llama-70b",
+      "upstream": "deepseek-r1-distill-llama-70b",
+      "status": 403,
+      "ok": false,
+      "ms": 117,
+      "error": "Access denied. For details, see: https://help.aliyun.com/zh/model-studio/error-code#access-denied"
+    },
+    {
+      "id": "qwen/deepseek-v4-flash-0731",
+      "upstream": "deepseek-v4-flash-0731",
+      "status": 200,
+      "ok": true,
+      "ms": 2023,
+      "error": null
+    },
+    {
+      "id": "qwen/deepseek-v4-pro",
+      "upstream": "deepseek-v4-pro",
+      "status": 200,
+      "ok": true,
+      "ms": 1842,
+      "error": null
+    },
+    {
+      "id": "qwen/deepseek-v4-pro-0813",
+      "upstream": "deepseek-v4-pro-0813",
+      "status": 200,
+      "ok": true,
+      "ms": 706,
+      "error": null
+    },
+    {
+      "id": "qwen/deepseek-v4.1-flash",
+      "upstream": "deepseek-v4.1-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 808,
+      "error": null
+    },
+    {
+      "id": "qwen/glm-5",
+      "upstream": "glm-5",
+      "status": 200,
+      "ok": true,
+      "ms": 2997,
+      "error": null
+    },
+    {
+      "id": "qwen/glm-5.1",
+      "upstream": "glm-5.1",
+      "status": 200,
+      "ok": true,
+      "ms": 4203,
+      "error": null
+    },
+    {
+      "id": "qwen/glm-5.2",
+      "upstream": "glm-5.2",
+      "status": 200,
+      "ok": true,
+      "ms": 407,
+      "error": null
+    },
+    {
+      "id": "qwen/glm-5.3",
+      "upstream": "glm-5.3",
+      "status": 200,
+      "ok": true,
+      "ms": 453,
+      "error": null
+    },
+    {
+      "id": "qwen/kimi-k2.5",
+      "upstream": "kimi-k2.5",
+      "status": 200,
+      "ok": true,
+      "ms": 304,
+      "error": null
+    },
+    {
+      "id": "qwen/kimi-k2.6",
+      "upstream": "kimi-k2.6",
+      "status": 200,
+      "ok": true,
+      "ms": 356,
+      "error": null
+    },
+    {
+      "id": "qwen/kimi-k2.7-code",
+      "upstream": "kimi-k2.7-code",
+      "status": 200,
+      "ok": true,
+      "ms": 782,
+      "error": null
+    },
+    {
+      "id": "qwen/kimi-k3",
+      "upstream": "kimi-k3",
+      "status": 200,
+      "ok": true,
+      "ms": 754,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-coder-plus-1106",
+      "upstream": "qwen-coder-plus-1106",
+      "status": 200,
+      "ok": true,
+      "ms": 403,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-flash",
+      "upstream": "qwen-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 222,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-flash-character",
+      "upstream": "qwen-flash-character",
+      "status": 200,
+      "ok": true,
+      "ms": 333,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-flash-character-2026-02-26",
+      "upstream": "qwen-flash-character-2026-02-26",
+      "status": 200,
+      "ok": true,
+      "ms": 396,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-long",
+      "upstream": "qwen-long",
+      "status": 200,
+      "ok": true,
+      "ms": 452,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-max",
+      "upstream": "qwen-max",
+      "status": 200,
+      "ok": true,
+      "ms": 322,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-max-0107",
+      "upstream": "qwen-max-0107",
+      "status": 404,
+      "ok": false,
+      "ms": 80,
+      "error": "The model `qwen-max-0107` does not exist or you do not have access to it."
+    },
+    {
+      "id": "qwen/qwen-max-1201",
+      "upstream": "qwen-max-1201",
+      "status": 429,
+      "ok": false,
+      "ms": 81,
+      "error": "You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit"
+    },
+    {
+      "id": "qwen/deepseek-r1-distill-llama-70b",
+      "upstream": "deepseek-r1-distill-llama-70b",
+      "status": 403,
+      "ok": false,
+      "ms": 512,
+      "error": "Access denied. For details, see: https://help.aliyun.com/zh/model-studio/error-code#access-denied"
+    },
+    {
+      "id": "qwen/qwen-max-0107",
+      "upstream": "qwen-max-0107",
+      "status": 404,
+      "ok": false,
+      "ms": 462,
+      "error": "The model `qwen-max-0107` does not exist or you do not have access to it."
+    },
+    {
+      "id": "qwen/qwen-max-1201",
+      "upstream": "qwen-max-1201",
+      "status": 429,
+      "ok": false,
+      "ms": 436,
+      "error": "You have exceeded your current request limit. For details, see: https://help.aliyun.com/zh/model-studio/error-code#rate-limit"
+    },
+    {
+      "id": "qwen/qwen-max-longcontext",
+      "upstream": "qwen-max-longcontext",
+      "status": 200,
+      "ok": true,
+      "ms": 717,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-mt-flash",
+      "upstream": "qwen-mt-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 540,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-mt-lite",
+      "upstream": "qwen-mt-lite",
+      "status": 200,
+      "ok": true,
+      "ms": 620,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-mt-plus",
+      "upstream": "qwen-mt-plus",
+      "status": 200,
+      "ok": true,
+      "ms": 543,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-mt-uni",
+      "upstream": "qwen-mt-uni",
+      "status": 200,
+      "ok": true,
+      "ms": 551,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus",
+      "upstream": "qwen-plus",
+      "status": 200,
+      "ok": true,
+      "ms": 645,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus-2025-01-25",
+      "upstream": "qwen-plus-2025-01-25",
+      "status": 200,
+      "ok": true,
+      "ms": 722,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus-2025-04-28",
+      "upstream": "qwen-plus-2025-04-28",
+      "status": 200,
+      "ok": true,
+      "ms": 565,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus-2025-07-14",
+      "upstream": "qwen-plus-2025-07-14",
+      "status": 200,
+      "ok": true,
+      "ms": 679,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus-2025-11-05",
+      "upstream": "qwen-plus-2025-11-05",
+      "status": 200,
+      "ok": true,
+      "ms": 1162,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus-2025-12-01",
+      "upstream": "qwen-plus-2025-12-01",
+      "status": 200,
+      "ok": true,
+      "ms": 738,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-plus-latest",
+      "upstream": "qwen-plus-latest",
+      "status": 200,
+      "ok": true,
+      "ms": 731,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-turbo-0919",
+      "upstream": "qwen-turbo-0919",
+      "status": 404,
+      "ok": false,
+      "ms": 419,
+      "error": "The model `qwen-turbo-0919` does not exist or you do not have access to it."
+    },
+    {
+      "id": "qwen/qwen-turbo-2024-11-01",
+      "upstream": "qwen-turbo-2024-11-01",
+      "status": 403,
+      "ok": false,
+      "ms": 477,
+      "error": "Access denied. For details, see: https://help.aliyun.com/zh/model-studio/error-code#access-denied"
+    },
+    {
+      "id": "qwen/qwen-vl-ocr",
+      "upstream": "qwen-vl-ocr",
+      "status": 200,
+      "ok": true,
+      "ms": 3191,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen-vl-ocr-2025-11-20",
+      "upstream": "qwen-vl-ocr-2025-11-20",
+      "status": 200,
+      "ok": true,
+      "ms": 576,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3-coder-flash",
+      "upstream": "qwen3-coder-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 622,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3-omni-flash",
+      "upstream": "qwen3-omni-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 571,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3-vl-plus",
+      "upstream": "qwen3-vl-plus",
+      "status": 200,
+      "ok": true,
+      "ms": 678,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-122b-a10b",
+      "upstream": "qwen3.5-122b-a10b",
+      "status": 200,
+      "ok": true,
+      "ms": 2285,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-27b",
+      "upstream": "qwen3.5-27b",
+      "status": 200,
+      "ok": true,
+      "ms": 3297,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-35b-a3b",
+      "upstream": "qwen3.5-35b-a3b",
+      "status": 400,
+      "ok": false,
+      "ms": 486,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.5-397b-a17b",
+      "upstream": "qwen3.5-397b-a17b",
+      "status": 400,
+      "ok": false,
+      "ms": 491,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.5-flash",
+      "upstream": "qwen3.5-flash",
+      "status": 400,
+      "ok": false,
+      "ms": 492,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.5-flash-2026-02-23",
+      "upstream": "qwen3.5-flash-2026-02-23",
+      "status": 400,
+      "ok": false,
+      "ms": 469,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.5-ocr",
+      "upstream": "qwen3.5-ocr",
+      "status": 200,
+      "ok": true,
+      "ms": 551,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-omni-flash",
+      "upstream": "qwen3.5-omni-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 609,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-omni-flash-2026-03-15",
+      "upstream": "qwen3.5-omni-flash-2026-03-15",
+      "status": 200,
+      "ok": true,
+      "ms": 601,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-omni-plus",
+      "upstream": "qwen3.5-omni-plus",
+      "status": 200,
+      "ok": true,
+      "ms": 835,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-omni-plus-2026-03-15",
+      "upstream": "qwen3.5-omni-plus-2026-03-15",
+      "status": 200,
+      "ok": true,
+      "ms": 760,
+      "error": null
+    },
+    {
+      "id": "qwen/qwen3.5-plus",
+      "upstream": "qwen3.5-plus",
+      "status": 400,
+      "ok": false,
+      "ms": 477,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.5-plus-2026-02-15",
+      "upstream": "qwen3.5-plus-2026-02-15",
+      "status": 400,
+      "ok": false,
+      "ms": 445,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.5-plus-2026-04-20",
+      "upstream": "qwen3.5-plus-2026-04-20",
+      "status": 400,
+      "ok": false,
+      "ms": 470,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.6-27b",
+      "upstream": "qwen3.6-27b",
+      "status": 400,
+      "ok": false,
+      "ms": 488,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.6-35b-a3b",
+      "upstream": "qwen3.6-35b-a3b",
+      "status": 400,
+      "ok": false,
+      "ms": 473,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.6-flash",
+      "upstream": "qwen3.6-flash",
+      "status": 400,
+      "ok": false,
+      "ms": 467,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.6-flash-2026-04-16",
+      "upstream": "qwen3.6-flash-2026-04-16",
+      "status": 400,
+      "ok": false,
+      "ms": 493,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.6-plus",
+      "upstream": "qwen3.6-plus",
+      "status": 400,
+      "ok": false,
+      "ms": 483,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.6-plus-2026-04-02",
+      "upstream": "qwen3.6-plus-2026-04-02",
+      "status": 400,
+      "ok": false,
+      "ms": 522,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-flash",
+      "upstream": "qwen3.7-flash",
+      "status": 400,
+      "ok": false,
+      "ms": 512,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-flash-2026-07-15",
+      "upstream": "qwen3.7-flash-2026-07-15",
+      "status": 400,
+      "ok": false,
+      "ms": 489,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-max",
+      "upstream": "qwen3.7-max",
+      "status": 400,
+      "ok": false,
+      "ms": 450,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-max-2026-05-17",
+      "upstream": "qwen3.7-max-2026-05-17",
+      "status": 400,
+      "ok": false,
+      "ms": 464,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-max-2026-05-20",
+      "upstream": "qwen3.7-max-2026-05-20",
+      "status": 400,
+      "ok": false,
+      "ms": 448,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-max-2026-06-08",
+      "upstream": "qwen3.7-max-2026-06-08",
+      "status": 400,
+      "ok": false,
+      "ms": 498,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-max-preview",
+      "upstream": "qwen3.7-max-preview",
+      "status": 400,
+      "ok": false,
+      "ms": 505,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-plus",
+      "upstream": "qwen3.7-plus",
+      "status": 400,
+      "ok": false,
+      "ms": 486,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.7-plus-2026-05-26",
+      "upstream": "qwen3.7-plus-2026-05-26",
+      "status": 400,
+      "ok": false,
+      "ms": 455,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.8-2.4t-a95b",
+      "upstream": "qwen3.8-2.4t-a95b",
+      "status": 400,
+      "ok": false,
+      "ms": 462,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.8-27b",
+      "upstream": "qwen3.8-27b",
+      "status": 400,
+      "ok": false,
+      "ms": 479,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.8-flash",
+      "upstream": "qwen3.8-flash",
+      "status": 400,
+      "ok": false,
+      "ms": 476,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.8-max",
+      "upstream": "qwen3.8-max",
+      "status": 400,
+      "ok": false,
+      "ms": 501,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.8-max-0902",
+      "upstream": "qwen3.8-max-0902",
+      "status": 400,
+      "ok": false,
+      "ms": 478,
+      "error": "Access denied, please make sure your account is in good standing. For details, see: https://help.aliyun.com/zh/model-studio/error-code#overdue-payment"
+    },
+    {
+      "id": "qwen/qwen3.8-omni-flash",
+      "upstream": "qwen3.8-omni-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 1274,
+      "error": null
+    },
+    {
+      "id": "qwen/tongyi-xiaomi-analysis-flash",
+      "upstream": "tongyi-xiaomi-analysis-flash",
+      "status": 200,
+      "ok": true,
+      "ms": 597,
+      "error": null
+    },
+    {
+      "id": "qwen/tongyi-xiaomi-analysis-pro",
+      "upstream": "tongyi-xiaomi-analysis-pro",
+      "status": 200,
+      "ok": true,
+      "ms": 608,
+      "error": null
+    }
+  ]
+}

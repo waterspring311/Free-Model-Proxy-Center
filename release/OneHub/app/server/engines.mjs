@@ -164,12 +164,17 @@ export class Engines {
   async health(channel) {
     const started = performance.now();
     try {
-      const response = await fetch(channel.base_url + (channel.provider === 'opencode' ? '/healthz' : '/health'), {
+      const path = channel.provider === 'opencode' ? '/healthz'
+        : channel.provider === 'openrouter' || channel.provider === 'qwen' || channel.provider === 'siliconflow'
+          ? '/v1/models' : '/health';
+      const response = await fetch(channel.base_url + path, {
         headers: this.headers(channel), redirect: 'error', signal: AbortSignal.timeout(2500),
       });
-      const body = await response.json();
+      const body = await response.json().catch(() => ({}));
       const reachable = response.ok || (channel.provider === 'opencode' && response.status === 503 && body.ready === false);
-      const ready = channel.provider === 'workbuddy' ? body.accounts_ready > 0 : body.ready !== false;
+      const ready = channel.provider === 'workbuddy' ? body.accounts_ready > 0
+        : channel.provider === 'openrouter' || channel.provider === 'qwen' || channel.provider === 'siliconflow'
+          ? response.ok : body.ready !== false;
       if (reachable && channel.managed && this.processes.has(channel.provider)) {
         this.states[channel.provider] = { status: 'running', pid: this.processes.get(channel.provider).pid };
       }

@@ -1,154 +1,83 @@
-6:43:09 Tab1 PageLoad
-6:43:12 Tab2 StartNav43 #typed
-6:43:12 Tab2 FinishNav43
-6:43:12 Tab2 PageLoad
-6:43:27 Tab2 StartNav44 #renderer-user #link
-6:43:27 Tab2 FinishNav44
-6:43:28 Tab2 StartNav45 #renderer-user #link
-6:43:28 Tab2 FinishNav45
-6:43:28 Tab2 StartNav46 #renderer-user #link
-6:43:28 Tab2 FinishNav46
-6:43:29 Tab2 StartNav47 #renderer-user #link
-6:43:29 Tab2 FinishNav47
-6:43:29 Tab2 StartNav48 #renderer-user #link
-6:43:29 Tab2 FinishNav48
-6:43:30 Tab2 StartNav49 #renderer-user #link
-6:43:30 Tab2 FinishNav49
-6:43:30 Tab2 StartNav50 #renderer-user #link
-6:43:30 Tab2 FinishNav50
-6:43:32 Tab2 StartNav51 #renderer-user #link
-6:43:32 Tab2 FinishNav51
-6:43:38 Tab2 StartNav52 #renderer-user #link
-6:43:38 Tab2 FinishNav52
-6:43:39 Tab2 StartNav53 #renderer-user #link
-6:43:39 Tab2 FinishNav53
-6:43:39 Tab2 StartNav54 #renderer-user #link
-6:43:39 Tab2 FinishNav54
-6:44:37 Tab2 StartNav55 #renderer-user #link
-6:44:37 Tab2 FinishNav55
-6:45:18 Tab2 StartNav56 #renderer-user #link
-6:45:18 Tab2 FinishNav56
-6:45:18 Tab2 StartNav57 #renderer-user #link
-6:45:18 Tab2 FinishNav57
-6:45:29 Tab2 StartNav58 #renderer-user #link
-6:45:29 Tab2 FinishNav58
-6:45:33 Tab2 StartNav59 #renderer-user #link
-6:45:33 Tab2 FinishNav59
-6:45:34 Tab2 StartNav60 #renderer-user #link
-6:45:34 Tab2 FinishNav60
-6:45:35 Tab2 StartNav61 #renderer-user #link
-6:45:35 Tab2 FinishNav61
-6:45:36 Tab2 StartNav62 #renderer-user #link
-6:45:36 Tab2 FinishNav62
-6:45:36 Tab2 StartNav63 #renderer-user #link
-6:45:36 Tab2 FinishNav63
-6:45:40 Widget Closed: TooltipAura
-6:45:47 Widget Closed: TooltipAura
-6:45:49 Widget Closed: TooltipAura
-6:45:50 Widget Closed: TooltipAura
-6:46:44 Widget Closed: TooltipAura
-6:46:46 Widget Closed: TooltipAura
-6:46:47 Widget Closed: TooltipAura
-6:49:11 Tab2 StartNav64 #renderer-user #link
-6:49:11 Tab2 FinishNav64
-6:49:12 Tab2 StartNav65 #renderer-user #link
-6:49:12 Tab2 FinishNav65
-6:49:53 Tab2 StartNav66 #renderer-user #link
-6:49:53 Tab2 FinishNav66
-6:49:54 Tab2 StartNav67 #renderer-user #link
-6:49:54 Tab2 FinishNav67
-6:49:55 Tab2 StartNav68 #renderer-user #link
-6:49:55 Tab2 FinishNav68
-6:49:56 Tab2 StartNav69 #renderer-user #link
-6:49:56 Tab2 FinishNav69
-6:49:56 Tab2 StartNav70 #renderer-user #link
-6:49:56 Tab2 FinishNav70
-6:50:36 Tab2 StartNav71 #renderer-user #link
-6:50:36 Tab2 FinishNav71
-6:50:37 Tab2 StartNav72 #renderer-user #link
-6:50:37 Tab2 FinishNav72
-6:50:37 Tab2 StartNav73 #renderer-user #link
-6:50:37 Tab2 FinishNav73
-6:50:38 Tab2 StartNav74 #renderer-user #link
-6:50:38 Tab2 FinishNav74
-6:50:39 Tab2 StartNav75 #renderer-user #link
-6:50:39 Tab2 FinishNav75
-6:50:39 Tab2 StartNav76 #renderer-user #link
-6:50:39 Tab2 FinishNav76
-6:50:39 Tab2 StartNav77 #renderer-user #link
-6:50:39 Tab2 FinishNav77
-6:50:41 Tab2 StartNav78 #renderer-user #link
-6:50:41 Tab2 FinishNav78
-6:50:42 Tab2 StartNav79 #renderer-user #link
-6:50:42 Tab2 FinishNav79
-6:50:42 Tab2 StartNav80 #renderer-user #link
-6:50:42 Tab2 FinishNav80
-6:50:44 Tab2 StartNav81 #renderer-user #link
-6:50:44 Tab2 FinishNav81
-6:50:45 Tab2 StartNav82 #renderer-user #link
-6:50:45 Tab2 FinishNav82
-6:50:45 Tab2 StartNav83 #renderer-user #link
-6:50:45 Tab2 FinishNav83
-6:50:45 Tab2 StartNav84 #renderer-user #link
-6:50:45 Tab2 FinishNav84
-6:50:46 Tab2 StartNav85 #renderer-user #link
-6:50:46 Tab2 FinishNav85
-6:51:43 Widget Closed: TooltipAura
-6:53:41 Widget Closed: TooltipAura
-6:53:49 Widget Closed: TooltipAura
-6:54:02 Tab2 StartNav86 #renderer-user #link
-6:54:02 Tab2 FinishNav86
-6:54:09 Tab2 StartNav87 #renderer-user #link
-6:54:09 Tab2 FinishNav87
-6:54:10 Tab2 StartNav88 #renderer-user #link
-6:54:10 Tab2 FinishNav88
-6:54:10 Tab2 StartNav89 #renderer-user #link
-6:54:10 Tab2 FinishNav89
-6:54:11 Tab2 StartNav90 #renderer-user #link
-6:54:11 Tab2 FinishNav90
-6:54:12 Tab1 StartNav91 #typed
-6:54:12 Tab1 FinishNav91
-6:54:12 Tab1 PageLoad
-6:54:14 Tab2 StartNav92 #renderer-user #link
-6:54:14 Tab2 FinishNav92
-6:54:16 Tab2 StartNav93 #renderer-user #link
-6:54:16 Tab2 FinishNav93
-6:54:16 Tab2 StartNav94 #typed
-6:54:16 Tab2 StartNav95 #renderer-user #link
-6:54:16 Tab2 FinishNav95
-6:54:16 Tab2 FinishNav94
-6:54:16 Tab2 PageLoad
-6:54:17 Tab2 StartNav96 #renderer-user #link
-6:54:17 Tab2 FinishNav96
-6:54:17 Tab2 StartNav97 #renderer-user #link
-6:54:17 Tab2 FinishNav97
-6:54:39 Tab2 StartNav98 #renderer-user #link
-6:54:39 Tab2 FinishNav98
-6:54:42 Widget Closed: TooltipAura
-6:55:10 Widget Closed: TooltipAura
-6:56:50 Widget Closed: TooltipAura
-6:57:01 Tab2 StartNav99 #renderer-user #link
-6:57:01 Tab2 FinishNav99
-6:57:02 Tab2 StartNav100 #renderer-user #link
-6:57:02 Tab2 FinishNav100
-6:57:14 Tab2 StartNav101 #renderer-user #link
-6:57:14 Tab2 FinishNav101
-6:57:20 Tab2 StartNav102 #renderer-user #link
-6:57:20 Tab2 FinishNav102
-7:12:28 Tab1 StartNav103 #typed
-7:12:28 Tab1 FinishNav103 ERR_CONNECTION_REFUSED
-7:12:28 Tab1 PageLoad
-7:12:32 Tab2 StartNav104 #typed
-7:12:32 Tab2 FinishNav104
-7:12:32 Tab2 PageLoad
-7:18:05 Tab2 StartNav105 #renderer-user #link
-7:18:05 Tab2 FinishNav105
-7:18:47 Tab2 StartNav106 #renderer-user #link
-7:18:47 Tab2 FinishNav106
-7:18:48 Tab2 StartNav107 #renderer-user #link
-7:18:48 Tab2 FinishNav107
-7:18:50 Tab2 StartNav108 #renderer-user #link
-7:18:50 Tab2 FinishNav108
-7:19:00 Tab2 StartNav109 #renderer-user #link
-7:19:00 Tab2 FinishNav109
-7:19:12 Widget Closed: TooltipAura
+4:38:27 Tab1 StartNav110 #renderer-user #link
+4:38:27 Tab1 FinishNav110
+4:38:27 Tab1 StartNav111 #renderer-user #link
+4:38:27 Tab1 FinishNav111
+4:38:30 Tab1 StartNav112 #renderer-user #link
+4:38:30 Tab1 FinishNav112
+4:38:34 Tab1 StartNav113 #renderer-user #link
+4:38:34 Tab1 FinishNav113
+4:38:35 Tab1 StartNav114 #renderer-user #link
+4:38:35 Tab1 FinishNav114
+4:38:35 Tab1 StartNav115 #renderer-user #link
+4:38:35 Tab1 FinishNav115
+4:38:36 Tab1 StartNav116 #renderer-user #link
+4:38:36 Tab1 FinishNav116
+4:38:36 Tab1 StartNav117 #renderer-user #link
+4:38:36 Tab1 FinishNav117
+4:38:40 Tab1 StartNav118 #renderer-user #link
+4:38:40 Tab1 FinishNav118
+4:38:40 Tab1 StartNav119 #renderer-user #link
+4:38:40 Tab1 FinishNav119
+4:38:41 Tab1 StartNav120 #renderer-user #link
+4:38:41 Tab1 FinishNav120
+4:38:41 Tab1 StartNav121 #renderer-user #link
+4:38:41 Tab1 FinishNav121
+4:38:42 Tab1 StartNav122 #renderer-user #link
+4:38:42 Tab1 FinishNav122
+4:38:44 Tab1 StartNav123 #renderer-user #link
+4:38:44 Tab1 FinishNav123
+4:38:44 Tab1 StartNav124 #renderer-user #link
+4:38:44 Tab1 FinishNav124
+4:38:45 Tab1 StartNav125 #renderer-user #link
+4:38:45 Tab1 FinishNav125
+4:38:45 Tab1 StartNav126 #renderer-user #link
+4:38:45 Tab1 FinishNav126
+4:38:46 Tab1 StartNav127 #renderer-user #link
+4:38:46 Tab1 FinishNav127
+4:38:46 Tab1 StartNav128 #renderer-user #link
+4:38:46 Tab1 FinishNav128
+4:38:46 Tab1 StartNav129 #renderer-user #link
+4:38:46 Tab1 FinishNav129
+4:38:47 Tab1 StartNav130 #renderer-user #link
+4:38:47 Tab1 FinishNav130
+4:39:16 Widget Closed: TooltipAura
+5:42:19 Tab1 StartNav131 #renderer-user #link
+5:42:19 Tab1 FinishNav131
+5:42:21 Tab1 StartNav132 #renderer-user #link
+5:42:21 Tab1 FinishNav132
+5:42:22 Tab1 StartNav133 #renderer-user #link
+5:42:22 Tab1 FinishNav133
+5:45:33 Tab1 StartNav134 #renderer-user #link
+5:45:33 Tab1 FinishNav134
+5:45:38 Tab1 StartNav135 #renderer-user #link
+5:45:38 Tab1 FinishNav135
+5:45:42 Widget Closed: TooltipAura
+5:48:07 Tab1 StartNav136 #renderer-user #link
+5:48:07 Tab1 FinishNav136
+9:29:17 Tab1 StartNav137 #renderer-user #link
+9:29:17 Tab1 FinishNav137
+9:29:18 Tab1 StartNav138 #renderer-user #link
+9:29:18 Tab1 FinishNav138
+9:29:19 Tab1 StartNav139 #renderer-user #link
+9:29:19 Tab1 FinishNav139
+9:29:46 Tab1 StartNav140 #renderer-user #link
+9:29:46 Tab1 FinishNav140
+9:29:47 Tab1 StartNav141 #renderer-user #link
+9:29:47 Tab1 FinishNav141
+9:29:47 Tab1 StartNav142 #renderer-user #link
+9:29:47 Tab1 FinishNav142
+9:29:48 Tab1 StartNav143 #renderer-user #link
+9:29:48 Tab1 FinishNav143
+12:15:47 Tab1 StartNav144 #renderer-user #link
+12:15:47 Tab1 FinishNav144
+12:15:47 Tab1 StartNav145 #renderer-user #link
+12:15:47 Tab1 FinishNav145
+12:15:53 Widget Closed: TooltipAura
+12:16:54 Tab1 StartNav146 #renderer-user #link
+12:16:54 Tab1 FinishNav146
+12:17:10 Tab1 StartNav147 #renderer-user #link
+12:17:10 Tab1 FinishNav147
+12:17:12 Tab1 StartNav148 #renderer-user #link
+12:17:12 Tab1 FinishNav148
+12:17:13 Tab1 StartNav149 #renderer-user #link
+12:17:13 Tab1 FinishNav149

@@ -43,6 +43,7 @@ before(async () => {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({ data: [
         { id: 'shared-model', cost: { input: 0, output: 0 }, credits: 'x0.00', pricing_source: 'product_config' },
+        { id: 'shared-model:free', pricing: { prompt: '0', completion: '0' } },
         { id: 'hold' }, { id: 'error-model' },
         { id: 'paid-model', cost: { input: 1, output: 1 }, credits: 'x0.29', pricing_source: 'product_config' },
       ] }));
@@ -406,6 +407,59 @@ test('model prober records per-model results and feeds the status board', async 
   assert.equal(channel.probe.probed, channel.models.filter(row => row.probe).length);
   assert.ok(board.body.probes.results.length >= 1);
   assert.equal(board.body.probes.enabled, true);
+});
+
+test('openrouter channels are accepted, classify free models and use the slower probe cadence', async () => {
+  const mockUrl = (await management('/channels')).body.channels
+    .find(row => row.base_url.startsWith('http://127.0.0.1')).base_url;
+  // A trailing /v1 is stripped so upstream paths resolve as <base>/v1/models.
+  const created = await management('/channels', 'POST', { name: 'OpenRouter', provider: 'openrouter',
+    prefix: 'openrouter', base_url: 'https://openrouter.ai/api/v1', key: 'sk-or-test' });
+  assert.equal(created.response.status, 201);
+  const id = created.body.id;
+  try {
+    const listed = (await management('/channels')).body.channels.find(row => row.id === id);
+    assert.equal(listed.provider, 'openrouter');
+    assert.equal(listed.managed, false);
+    assert.equal(listed.base_url, 'https://openrouter.ai/api');
+
+    // Free classification only trusts OpenRouter's explicit free IDs; a zero
+    // advertised price can still be a paid model requiring account credits.
+    const channel = app.store.channels().find(row => row.id === id);
+    assert.equal(app.catalog.freeStatus(channel, { id: 'vendor/free-model:free', pricing: { prompt: '0', completion: '0' } }), true);
+    assert.equal(app.catalog.freeStatus(channel, { id: 'vendor/zero-price-paid', pricing: { prompt: '0', completion: '0' } }), false);
+    assert.equal(app.catalog.freeStatus(channel, { id: 'openrouter/free', pricing: { prompt: '0', completion: '0' } }), true);
+    assert.equal(app.catalog.freeStatus(channel, { id: 'vendor/paid-model', pricing: { prompt: '0.000001', completion: '0.000002' } }), false);
+    assert.equal(app.catalog.freeStatus(channel, { id: 'vendor/other' }), false);
+
+    // Point it at the mock and confirm the free model flows through discovery.
+    await management('/channels/' + id, 'PATCH', { base_url: mockUrl });
+    const models = await management('/models?refresh=1');
+    const ids = models.body.data.filter(row => row.channel_id === id).map(row => row.id);
+    assert.ok(ids.includes('openrouter/shared-model:free'), 'free model listed: ' + ids.join(','));
+    assert.equal(models.body.data.find(row => row.id === 'openrouter/shared-model')?.is_free, false,
+      'zero-priced non-free model is not marked free');
+    assert.ok(!ids.some(model => /paid-model/.test(model) && models.body.data
+      .find(row => row.id === model)?.is_free === true), 'paid models are never marked free');
+
+    // OpenRouter's channel gap is the slow override; other channels stay per-minute.
+    const { ModelProber, manualSweep } = await import('../server/probes.mjs');
+    const prober = new ModelProber(app.store, app.catalog, app.engines);
+    assert.ok(prober.openrouterGap >= 600, 'openrouter gap is conservative');
+    assert.equal(prober.channelGapFor(id), prober.openrouterGap);
+    const other = app.store.channels().find(row => row.provider === 'opencode');
+    assert.equal(prober.channelGapFor(other.id), prober.channelGap);
+
+    // A manual "test all" sweep must not fire every OpenRouter model at once.
+    const swept = manualSweep([
+      { id: 'openrouter/a', channel_id: id }, { id: 'openrouter/b', channel_id: id },
+      { id: 'opencode/c', channel_id: other.id },
+    ], new Map([[id, 'openrouter'], [other.id, 'opencode']])).map(row => row.id);
+    assert.deepEqual(swept, ['openrouter/a', 'opencode/c']);
+  } finally {
+    await management('/channels/' + id, 'DELETE');
+    app.store.db.prepare('DELETE FROM models WHERE channel_id=?').run(id);
+  }
 });
 
 test('channel status prefers a newer successful request over a stale probe limit', async () => {

@@ -1,4 +1,53 @@
+import { assessCapability } from './capability.mjs';
 import { HttpError } from './security.mjs';
+
+// Qwen / DashScope grants every model its own newcomer free quota (typically
+// 1,000,000 tokens, valid 90 days, 华北2北京 region only). There is no public
+// API that reports the remaining quota or marks a model as free, so free
+// status is driven by explicit allowlists: the `qwen_free_models` setting
+// (newline/comma separated IDs, a trailing `*` matches a prefix) overrides the
+// built-in defaults below. Anything not listed stays unknown, so free-only mode
+// keeps it hidden.
+const QWEN_FREE_PREFIXES = [
+  'qwen-max', 'qwen-plus', 'qwen-turbo', 'qwen-flash', 'qwen-long',
+  'qwen-vl', 'qwen-coder', 'qwen-mt',
+  'qwen3-max', 'qwen3-plus', 'qwen3-flash', 'qwen3-turbo',
+  'qwen3-coder', 'qwen3-vl', 'qwen3-omni',
+  'qwen3.5-', 'qwen3.6-', 'qwen3.7-', 'qwen3.8-',
+];
+// These non-Qwen model IDs are documented on the same mainland-China pricing
+// page as having a 1,000,000-token newcomer quota. Provider-namespaced hosted
+// variants (for example `vanchin/deepseek-v4.1-flash`) are deliberately absent:
+// Alibaba lists those as paid even when the bare model ID is free.
+const QWEN_FREE_MODELS = [
+  'deepseek-v4.1-flash', 'deepseek-v4-pro', 'deepseek-v4-pro-0813',
+  'deepseek-v4-flash-0731', 'deepseek-r1-distill-llama-70b',
+  'kimi-k3', 'kimi-k2.7-code', 'kimi-k2.6', 'kimi-k2.5',
+  'glm-5.3', 'glm-5.2', 'glm-5.1', 'glm-5',
+  'MiniMax-M2.5', 'tongyi-xiaomi-analysis-flash', 'tongyi-xiaomi-analysis-pro',
+];
+// Media and service models share the platform but are not chat endpoints, so
+// they are never advertised as free in this chat-focused gateway.
+const QWEN_NON_CHAT = /(image|tts|asr|speech|embedding|rerank|realtime|livetranslate|deep-research|deep-search|audio|sre-|test-sre)/i;
+
+// SiliconFlow (硅基流动) /v1/models exposes only IDs, never prices, so free
+// status comes from an explicit allowlist matching the models its 价格中心 lists
+// as 免费 (¥0). The `siliconflow_free_models` setting overrides this (newline or
+// comma separated, a trailing `*` matches a prefix); anything not listed stays
+// unknown so free-only mode keeps it hidden. Only chat-capable endpoints are
+// listed, since the gateway routes chat completions.
+const SILICONFLOW_FREE_MODELS = [
+  'Qwen/Qwen2.5-7B-Instruct',
+  'Qwen/Qwen3-8B',
+  'Qwen/Qwen3.5-4B',
+  'THUDM/GLM-4-9B-0414',
+  'THUDM/GLM-Z1-9B-0414',
+  'deepseek-ai/DeepSeek-R1-0528-Qwen3-8B',
+  'deepseek-ai/DeepSeek-OCR',
+  'tencent/Hunyuan-MT-7B',
+  'XingChenAGI/Xing4.0-29B',
+  'PaddlePaddle/PaddleOCR-VL-1.5',
+];
 
 export function creditMultiplier(value) {
   if (typeof value === 'number') return Number.isFinite(value) && value >= 0 ? value : null;
@@ -23,7 +72,9 @@ export class Catalog {
   source(channel) {
     return JSON.stringify({
       base_url: channel.base_url, prefix: channel.prefix, provider: channel.provider, realm: channel.realm,
-      pricing_version: 2, free_only: this.freeOnly(),
+      pricing_version: 3, free_only: this.freeOnly(),
+      ...(channel.provider === 'qwen' ? { qwen_free: String(this.store.get('qwen_free_models', '') || '') } : {}),
+      ...(channel.provider === 'siliconflow' ? { sf_free: String(this.store.get('siliconflow_free_models', '') || '') } : {}),
       ...(channel.managed && channel.provider === 'opencode' ? {
         anonymous: this.store.get('anonymous_enabled', true),
         accounts: this.store.accounts().filter(row => row.enabled).map(row => [row.id, row.kind]).sort(),
@@ -46,12 +97,21 @@ export class Catalog {
   }
 
   freeStatus(channel, row) {
+    if (channel.provider === 'qwen') return this.qwenFree(row.id);
+    if (channel.provider === 'siliconflow') return this.siliconflowFree(row.id);
     if (channel.provider === 'workbuddy') {
       if (channel.managed && row.pricing_source !== 'product_config') return null;
       if (row.credits !== undefined) {
         const multiplier = creditMultiplier(row.credits);
         return multiplier == null ? null : multiplier === 0;
       }
+    }
+    if (channel.provider === 'openrouter') {
+      // OpenRouter marks the no-credit free variants with a `:free` suffix.
+      // Some paid/non-suffixed models also advertise zero token prices but
+      // still require account credits (they return HTTP 402), so price alone
+      // is not sufficient to treat them as free.
+      return /:free$/i.test(row.id) || row.id.toLowerCase() === 'openrouter/free';
     }
     const cost = row.cost || row.pricing || row.metadata?.cost;
     if (Number.isFinite(cost?.input) && Number.isFinite(cost?.output)) {
@@ -63,6 +123,41 @@ export class Catalog {
     if (channel.managed && channel.provider === 'opencode' && this.store.get('anonymous_enabled', true)
       && !this.store.accounts().some(account => account.enabled)) return true;
     return null;
+  }
+
+  // See QWEN_FREE_PREFIXES and QWEN_FREE_MODELS: documented Qwen and partner
+  // chat models count as free, while everything else stays unknown so free-only
+  // mode keeps it hidden.
+  qwenFree(model) {
+    if (typeof model !== 'string' || !model) return null;
+    const id = model.toLowerCase();
+    const configured = String(this.store.get('qwen_free_models', '') || '').trim();
+    if (configured) {
+      const matched = configured.split(/[\n,]+/).map(part => part.trim()).filter(Boolean).some(pattern => {
+        const needle = pattern.toLowerCase();
+        return needle.endsWith('*') ? id.startsWith(needle.slice(0, -1)) : id === needle;
+      });
+      return matched ? true : null;
+    }
+    if (QWEN_NON_CHAT.test(model)) return null;
+    return QWEN_FREE_MODELS.some(entry => entry.toLowerCase() === id)
+      || QWEN_FREE_PREFIXES.some(prefix => id.startsWith(prefix)) ? true : null;
+  }
+
+  // See SILICONFLOW_FREE_MODELS: only the allowlisted ¥0 chat models count as
+  // free; everything else stays unknown so free-only mode keeps it hidden.
+  siliconflowFree(model) {
+    if (typeof model !== 'string' || !model) return null;
+    const id = model.toLowerCase();
+    const configured = String(this.store.get('siliconflow_free_models', '') || '').trim();
+    if (configured) {
+      const matched = configured.split(/[\n,]+/).map(part => part.trim()).filter(Boolean).some(pattern => {
+        const needle = pattern.toLowerCase();
+        return needle.endsWith('*') ? id.startsWith(needle.slice(0, -1)) : id === needle;
+      });
+      return matched ? true : null;
+    }
+    return SILICONFLOW_FREE_MODELS.some(entry => entry.toLowerCase() === id) ? true : null;
   }
 
   async load(channel, force = false) {
@@ -152,7 +247,7 @@ export class Catalog {
       for (const row of permitted) {
         const enabled = !!result.channel.enabled && !this.disabled(row.id);
         if (!includeDisabled && !enabled) continue;
-        models.push({ ...row, enabled, stale: result.stale });
+        models.push({ ...row, enabled, stale: result.stale, ...(includeDisabled ? { capability: assessCapability(row) } : {}) });
       }
     }
     const targets = new Map(models.map(row => [row.id, row]));
